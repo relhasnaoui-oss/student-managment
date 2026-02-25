@@ -1,0 +1,10 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Initialize Student Management App",
+			"type": "shell",
+			"command": "cd \"C:\\Users\\ritae\\OneDrive\\Desktop\\app\" && git init && git config user.email \"r.elhasnaoui@esisa.ac.ma\" && git config user.name \"El Hasnaoui Ramadan\" && git add . && git commit -m \"Initialize student management application\""
+		}
+	]
+}
