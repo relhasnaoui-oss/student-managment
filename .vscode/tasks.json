@@ -5,6 +5,21 @@
 			"label": "Initialize Student Management App",
 			"type": "shell",
 			"command": "cd \"C:\\Users\\ritae\\OneDrive\\Desktop\\app\" && git init && git config user.email \"r.elhasnaoui@esisa.ac.ma\" && git config user.name \"El Hasnaoui Ramadan\" && git add . && git commit -m \"Initialize student management application\""
+		},
+		{
+			"label": "Build and Run Student Management App",
+			"type": "shell",
+			"command": "npm run build && npm start",
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "Build Student Management App",
+			"type": "shell",
+			"command": "npm run build",
+			"problemMatcher": [
+				"$tsc"
+			]
 		}
 	]
 }

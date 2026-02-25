@@ -1,34 +1,32 @@
+// server-only logic — do not use the top-level "use server" directive
+
 import type { NextAuthConfig } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import db, { initializeDatabase } from './db';
 
-// Initialize database on startup
-initializeDatabase();
-
 export const authConfig = {
+  // debug logging to investigate client fetch issues
+  debug: true,
+  logger: {
+    error(code, metadata) {
+      console.error('NextAuth error', code, metadata);
+    },
+    warn(code) {
+      console.warn('NextAuth warning', code);
+    },
+    debug(code, metadata) {
+      console.log('NextAuth debug', code, metadata);
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET || 'dev-secret',
   pages: {
     signIn: '/login',
-  },
-  callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-      
-      if (isOnDashboard) {
-        return isLoggedIn;
-      }
-      
-      if (isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', nextUrl));
-      }
-      
-      return true;
-    },
   },
   providers: [
     CredentialsProvider({
       async authorize(credentials: any) {
+        console.log('credentials authorize called', credentials);
         if (!credentials?.email || !credentials?.password) {
           return null;
         }

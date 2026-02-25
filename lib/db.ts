@@ -1,6 +1,3 @@
-import path from 'path';
-import fs from 'fs';
-
 // Initialize in-memory database mock
 interface Student {
   id: number;
@@ -28,14 +25,6 @@ interface DatabaseState {
   students: Student[];
 }
 
-const dbDir = path.join(process.cwd(), 'data');
-const dbPath = path.join(dbDir, 'db.json');
-
-// Initialize data directory
-if (!fs.existsSync(dbDir)) {
-  fs.mkdirSync(dbDir, { recursive: true });
-}
-
 let dbState: DatabaseState = {
   users: [],
   students: [],
@@ -44,9 +33,17 @@ let dbState: DatabaseState = {
 // Load database from file
 function loadDB() {
   try {
-    if (fs.existsSync(dbPath)) {
-      const data = fs.readFileSync(dbPath, 'utf-8');
-      dbState = JSON.parse(data);
+    // Only load on server side
+    if (typeof window === 'undefined') {
+      const path = require('path');
+      const fs = require('fs');
+      const dbDir = path.join(process.cwd(), 'data');
+      const dbPath = path.join(dbDir, 'db.json');
+      
+      if (fs.existsSync(dbPath)) {
+        const data = fs.readFileSync(dbPath, 'utf-8');
+        dbState = JSON.parse(data);
+      }
     }
   } catch (error) {
     console.error('Error loading database:', error);
@@ -56,7 +53,18 @@ function loadDB() {
 // Save database to file
 function saveDB() {
   try {
-    fs.writeFileSync(dbPath, JSON.stringify(dbState, null, 2));
+    // Only save on server side
+    if (typeof window === 'undefined') {
+      const path = require('path');
+      const fs = require('fs');
+      const dbDir = path.join(process.cwd(), 'data');
+      const dbPath = path.join(dbDir, 'db.json');
+      
+      if (!fs.existsSync(dbDir)) {
+        fs.mkdirSync(dbDir, { recursive: true });
+      }
+      fs.writeFileSync(dbPath, JSON.stringify(dbState, null, 2));
+    }
   } catch (error) {
     console.error('Error saving database:', error);
   }
