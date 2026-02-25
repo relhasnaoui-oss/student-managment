@@ -13,9 +13,8 @@
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "next-auth": "^5.0.0-beta.20",
+    "next-auth": "^5.0.0-beta.22",
     "bcryptjs": "^2.4.3",
-    "better-sqlite3": "^9.2.2",
     "dotenv": "^16.3.1"
   },
   "devDependencies": {
@@ -23,12 +22,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/better-sqlite3": "^7.6.8",
     "@types/bcryptjs": "^2.4.6",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "ts-node": "^10.9.2"
+    "typescript": "^5"
   }
 }
